@@ -1,18 +1,25 @@
-CC=c++
-CFLAGS= -Wall  -Wextra -Werror
+NAME = megaphone
 
-SRC=megaphone.cpp
+CC = c++
+CFLAGS	= -Wall -Wextra -Werror -std=c++98
 
-NAME=megaphone
+SRC = megaphone.cpp
+OBJ = $(SRC:.cpp=.o)
 
 all: $(NAME)
 
-$(NAME):
-	$(CC) $(CFLAGS) $(SRC) -o $@
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+
+%.o: %.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(NAME)
+	rm -f $(OBJ)
 
-re: clean all
+fclean: clean
+	rm -f $(NAME)
 
-.PHONY: all clean re
+re: fclean all
+
+.PHONY: all clean fclean re
