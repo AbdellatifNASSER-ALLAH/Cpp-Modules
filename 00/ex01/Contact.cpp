@@ -5,7 +5,7 @@
 Contact::Contact() {
 	first_name = "";
 	last_name = "";
-	nickname = "";
+	nick_name = "";
 	phone_number = "";
 	darkest_secret = "";
 }
@@ -22,8 +22,8 @@ void Contact::setLastName(std::string lastName) {
 	last_name = lastName;
 }
 
-void Contact::setNickname(std::string nick) {
-	nickname = nick;
+void	Contact::setNickname(std::string nickname) {
+	nick_name = nickname;
 }
 
 void Contact::setPhoneNumber(std::string phoneNumber) {
@@ -44,7 +44,7 @@ std::string Contact::getLastName() const {
 }
 
 std::string Contact::getNickname() const {
-	return nickname;
+	return nick_name;
 }
 
 std::string Contact::getPhoneNumber() const {
