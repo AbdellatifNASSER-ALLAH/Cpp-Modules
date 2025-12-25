@@ -1,7 +1,6 @@
 
 
 #include "PhoneBook.hpp"
-#include <string>
 
 PhoneBook::PhoneBook() {
 	//empty
@@ -30,6 +29,9 @@ void	PhoneBook::addContact() {
 	std::cout << "Darkest Secret :";
 	std::cin >> str;
 	newContact.setDarkestSecret(str);
+
+	contacts[ count % 8 ] = newContact;
+	count++;
 }
 
 void	PhoneBook::searchContact() {

@@ -3,6 +3,8 @@
 #define PHONEBOOK_H
 
 #include "Contact.hpp"
+#include <string>
+#include <iostream>
 
 class	PhoneBook {
 	private:
