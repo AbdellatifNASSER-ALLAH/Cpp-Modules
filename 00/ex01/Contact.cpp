@@ -11,6 +11,7 @@ Contact::Contact() {
 }
 
 Contact::~Contact() {
+	//empty
 }
 
 // Setters

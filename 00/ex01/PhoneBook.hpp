@@ -9,7 +9,9 @@
 class	PhoneBook {
 	private:
 		Contact contacts[8];
-		int	count = 0;
+		int	count;
+		std::string	truncate(std::string str) const;
+		void	displayTable() const;
 
 	public:
 		PhoneBook();
