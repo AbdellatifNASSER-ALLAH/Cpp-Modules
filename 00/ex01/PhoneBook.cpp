@@ -15,21 +15,30 @@ PhoneBook::~PhoneBook() {
 void	PhoneBook::addContact() {
 	Contact		newContact;
 	std::string	str;
-	
+
 	std::cout << "First Name : ";
-	std::cin >> str;
+	std::getline(std::cin, str);
+	if (str.empty()) { std::cout << "No empty fields ! " << std::endl; return;}
 	newContact.setFirstName(str);
+
 	std::cout << "Last Name : ";
-	std::cin >> str;
+	std::getline(std::cin, str);
+	if (str.empty()) { std::cout << "No empty fields ! " << std::endl; return;}
 	newContact.setLastName(str);
+
 	std::cout << "Nickname : ";
-	std::cin >> str;
+	std::getline(std::cin, str);
+	if (str.empty()) { std::cout << "No empty fields ! " << std::endl; return;}
 	newContact.setNickname(str);
+
 	std::cout << "Phone Number : ";
-	std::cin >> str;
+	std::getline(std::cin, str);
+	if (str.empty()) { std::cout << "No empty fields ! " << std::endl; return;}
 	newContact.setPhoneNumber(str);
+
 	std::cout << "Darkest Secret : ";
-	std::cin >> str;
+	std::getline(std::cin, str);
+	if (str.empty()) { std::cout << "No empty fields ! " << std::endl; return;}
 	newContact.setDarkestSecret(str);
 
 	contacts[ count % 8 ] = newContact;
@@ -66,17 +75,10 @@ void	PhoneBook::searchContact() {
 	}
 
 	displayTable();
-	
+
 	std::cout << "Enter index: ";
 	std::cin >> index;
 	--index;
-
-	if (std::cin.fail()) {
-		std::cin.clear();
-		std::cin.ignore(10000, '\n');
-		std::cout << "Invalid index!" << std::endl;
-		return;
-	}
 
 	max = (count < 8) ? count : 8;
 	if (index < 0 || index >= max) {

@@ -15,6 +15,7 @@ int	main()
 	
 	while (1) {
 		std::cin >> input;
+		std::cin.ignore();
 		if (std::cin.fail())
 			break ;
 		if (input.compare("EXIT") == 0)
