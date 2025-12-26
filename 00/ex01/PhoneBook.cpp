@@ -2,6 +2,7 @@
 
 #include "PhoneBook.hpp"
 #include <iomanip>
+#include <ostream>
 
 PhoneBook::PhoneBook() {
 	count = 0;
@@ -15,25 +16,25 @@ void	PhoneBook::addContact() {
 	Contact		newContact;
 	std::string	str;
 	
-	std::cout << "First Name :";
+	std::cout << "First Name : ";
 	std::cin >> str;
 	newContact.setFirstName(str);
-	std::cout << "Last Name :";
+	std::cout << "Last Name : ";
 	std::cin >> str;
 	newContact.setLastName(str);
-	std::cout << "Nickname :";
+	std::cout << "Nickname : ";
 	std::cin >> str;
 	newContact.setNickname(str);
-	std::cout << "Phone Number :";
+	std::cout << "Phone Number : ";
 	std::cin >> str;
 	newContact.setPhoneNumber(str);
-	std::cout << "Darkest Secret :";
+	std::cout << "Darkest Secret : ";
 	std::cin >> str;
 	newContact.setDarkestSecret(str);
 
 	contacts[ count % 8 ] = newContact;
-	count++;
-	std::cout << "Contacted Added" << std::endl;
+	(count < 8) ? count++ : 0;
+	std::cout << "Contact added" << std::endl;
 }
 
 std::string	PhoneBook::truncate(std::string str) const {
@@ -48,9 +49,8 @@ void	PhoneBook::displayTable() const {
 	std::cout << std::setw(10) << "Last Name" << "|";
 	std::cout << std::setw(10) << "Nickname" << std::endl;
 
-	int max = (count < 8) ? count : 8;
-	for (int i = 0; i < max; i++) {
-		std::cout << std::setw(10) << i << "|";
+	for (int i = 0; i < count; i++) {
+		std::cout << std::setw(10) << i + 1 << "|";
 		std::cout << std::setw(10) << truncate(contacts[i].getFirstName()) << "|";
 		std::cout << std::setw(10) << truncate(contacts[i].getLastName()) << "|";
 		std::cout << std::setw(10) << truncate(contacts[i].getNickname()) << std::endl;
@@ -58,6 +58,8 @@ void	PhoneBook::displayTable() const {
 }
 
 void	PhoneBook::searchContact() {
+	int index, max;
+
 	if (count == 0) {
 		std::cout << "PhoneBook is empty!" << std::endl;
 		return;
@@ -66,8 +68,8 @@ void	PhoneBook::searchContact() {
 	displayTable();
 	
 	std::cout << "Enter index: ";
-	int index;
 	std::cin >> index;
+	--index;
 
 	if (std::cin.fail()) {
 		std::cin.clear();
@@ -76,7 +78,7 @@ void	PhoneBook::searchContact() {
 		return;
 	}
 
-	int max = (count < 8) ? count : 8;
+	max = (count < 8) ? count : 8;
 	if (index < 0 || index >= max) {
 		std::cout << "Invalid index!" << std::endl;
 		return;
