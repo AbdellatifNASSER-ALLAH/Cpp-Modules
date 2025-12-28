@@ -1,1 +1,10 @@
 **/*.o
+# Compiled binaries
+megaphone
+phonebook
+account_test
+zombie
+violence
+sed
+harl
+harlFilter
