@@ -1,7 +1,7 @@
 NAME		= account_test
 
 CC		= c++
-CFLAGS		= -Wall -Wextra -Werror -std=c++98
+CFLAGS		= -Wall -Wextra -Werror -std=c++98 -g
 
 SRCS		= Account.cpp tests.cpp
 OBJS		= $(SRCS:.cpp=.o)
