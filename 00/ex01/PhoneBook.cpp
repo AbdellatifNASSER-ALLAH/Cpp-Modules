@@ -46,8 +46,11 @@ void	PhoneBook::addContact() {
 	newContact.setDarkestSecret(str);
 
 	contacts[ count % 8 ] = newContact;
-	(count < 8) ? count++ : count = 1;
-	(max < 8) ? max++ : 0;
+	if (count < 8)
+		count++;
+	else
+		count = 1;
+	if (max < 8) max++;
 	std::cout << "Contact added" << std::endl;
 }
 
