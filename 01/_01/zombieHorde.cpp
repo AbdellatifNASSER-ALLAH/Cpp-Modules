@@ -1,6 +1,7 @@
 
 
 #include "Zombie.hpp"
+#include <string>
 
 
 Zombie* zombieHorde(int N, std::string name) {
@@ -9,7 +10,7 @@ Zombie* zombieHorde(int N, std::string name) {
 
 	Zombie* horde = new Zombie[N];
 	for (int i = 0; i < N; i++) {
-		horde[i] = Zombie(name + "_" + std::to_string(i + 1));
+		horde[i] = Zombie(name + "_" + (char)(i + 1 + '0'));
 	}
 	return horde;
 }

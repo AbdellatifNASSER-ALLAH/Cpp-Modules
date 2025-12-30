@@ -2,6 +2,9 @@
 
 #include "Zombie.hpp"
 
+Zombie::Zombie() : name("") {
+	// Default constructor
+}
 Zombie::Zombie(std::string name) : name(name) {
 	std::cout << "Zombie " << this->name << " created." << std::endl;
 }
