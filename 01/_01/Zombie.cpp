@@ -1,19 +1,20 @@
 
 
 #include "Zombie.hpp"
+#include <iostream>
 
-Zombie::Zombie() : name("") {
-	// Default constructor
-}
-Zombie::Zombie(std::string name) : name(name) {
-	std::cout << "Zombie " << this->name << " created." << std::endl;
+Zombie::Zombie() {
+	std::cout << "Zombie Constructor." << std::endl;
 }
 
 Zombie::~Zombie() {
-	std::cout << "Zombie " << this->name << " destroyed." << std::endl;
+	std::cout << "Zombie Destructor." << std::endl;
 }
 
 void	Zombie::announce(void) {
-	std::cout << this->name << ": BraiiiiiiinnnzzzZ..." << std::endl;
+	std::cout << _name << ": BraiiiiiiinnnzzzZ..." << std::endl;
 }
 
+void	Zombie::setName(std::string name){
+	_name = name;
+}
