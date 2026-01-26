@@ -44,6 +44,15 @@ void	Bureaucrat::minusGrade() {
 		_grade++;
 }
 
+const	char* Bureaucrat::GradeTooLowException::what() const throw(){
+	return (RED "Grade too low" RESET);
+}
+
+const	char* Bureaucrat::GradeTooHighException::what() const throw(){
+	return (RED "Grade too high" RESET);
+}
+
+
 std::ostream& operator<< (std::ostream& os, const Bureaucrat& obj) {
 	os << obj.getName() << ", bureaucrat grade " << obj.getGrade() << ".";
 	return os;

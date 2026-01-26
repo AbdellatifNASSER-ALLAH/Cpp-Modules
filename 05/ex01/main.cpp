@@ -35,6 +35,7 @@ int main() {
         Bureaucrat boss("Boss", 1);
         std::cout << boss << std::endl;
         boss.plusGrade();
+
     } catch (std::exception &e) {
         std::cerr << RED << "Exception: " << e.what() << RESET << std::endl;
     }
