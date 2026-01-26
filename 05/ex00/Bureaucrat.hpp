@@ -6,6 +6,8 @@
 #include <string>
 #include <iostream>
 
+#define RED "\033[31m"
+#define RESET "\033[0m"
 
 class	Bureaucrat {
 	private:
@@ -26,13 +28,13 @@ class	Bureaucrat {
 		class	GradeTooHighException: public	std::exception {
 			public:
 				virtual	const	char* what() const throw(){
-					return ("Grade too high");
+					return (RED"Grade too high" RESET);
 				}
 		};
 		class	GradeTooLowException: public	std::exception { 
 			public:
 				virtual	const	char* what() const throw(){
-					return ("Grade too low");
+					return (RED"Grade too low" RESET);
 				}
 		};
 };
