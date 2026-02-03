@@ -9,6 +9,8 @@
 #define RED "\033[31m"
 #define RESET "\033[0m"
 
+class Form;
+
 class	Bureaucrat {
 	private:
 		const std::string	_name;
@@ -24,6 +26,7 @@ class	Bureaucrat {
 		int	getGrade() const;
 		void	plusGrade(); 
 		void	minusGrade();
+		void	signForm(Form& form) const;
 
 		class	GradeTooHighException: public	std::exception {
 			public:

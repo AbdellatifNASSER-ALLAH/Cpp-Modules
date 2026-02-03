@@ -2,12 +2,15 @@
 #ifndef FORM_HPP
 #define FORM_HPP
 
+#include <cstdio>
 #define RED "\033[31m"
 #define RESET "\033[0m"
 
 #include <exception>
 #include <string>
 #include <ostream>
+
+class	Bureaucrat;
 
 class	Form {
 	private:
@@ -28,13 +31,13 @@ class	Form {
 		int		getGradeSign() const;
 		int		getGradeExec() const;
 
-		void	beSigned(const class Bureaucrat& obj);
+		void	beSigned(const Bureaucrat& obj);
 
-		class GradeTooHighException : public std::exception {
+		class	GradeTooHighException : public std::exception {
 			public:
 				virtual const char *what() const throw();
 		};
-		class GradeTooLowException : public std::exception {
+		class	GradeTooLowException : public std::exception {
 			public:
 				virtual const char *what() const throw();
 		};
