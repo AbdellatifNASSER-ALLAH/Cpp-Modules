@@ -1,6 +1,6 @@
 
-#ifndef FORM_HPP
-#define FORM_HPP
+#ifndef AFORM_HPP
+#define AFORM_HPP
 
 #include <cstdio>
 #define RED "\033[31m"
@@ -12,7 +12,7 @@
 
 class	Bureaucrat;
 
-class	Form {
+class	AForm {
 	private:
 		const std::string	_name;
 		bool			_sign;
@@ -20,11 +20,13 @@ class	Form {
 		const	int		_grade_exec;
 
 	public:
-		Form();
-		Form(const std::string& name, const bool sign, const int grade_sign, const int grade_exec);
-		Form(const Form& other);
-		Form& operator=(const Form& other);
-		~Form();
+		AForm();
+		AForm(const std::string& name, const bool sign, const int grade_sign, const int grade_exec);
+		AForm(const AForm& other);
+		AForm& operator=(const AForm& other);
+		virtual	~AForm();
+
+		virtual	void	execute(Bureaucrat const& executer) const = 0;
 
 		const std::string	getName() const;
 		bool			getSign() const;
@@ -43,6 +45,6 @@ class	Form {
 		};
 };
 
-std::ostream& operator<<(std::ostream& os, const Form& obj);
+std::ostream& operator<<(std::ostream& os, const AForm& obj);
 
 #endif
