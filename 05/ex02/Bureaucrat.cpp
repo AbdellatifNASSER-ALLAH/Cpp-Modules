@@ -63,6 +63,15 @@ const	char* Bureaucrat::GradeTooHighException::what() const throw(){
 	return (RED "Grade too high" RESET);
 }
 
+void	Bureaucrat::executeForm(AForm const & form) const {
+	try {
+		form.execute(*this);
+		std::cout << _name << " executed " << form.getName() << std::endl;
+	} catch (std::exception& e) {
+		std::cout << _name << " couldn't execute " << form.getName() << " because " << e.what() << std::endl;
+	}
+}
+
 
 std::ostream& operator<< (std::ostream& os, const Bureaucrat& obj) {
 	os << obj.getName() << ", bureaucrat grade " << obj.getGrade() << ".";

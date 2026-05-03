@@ -40,6 +40,17 @@ const	char* AForm::GradeTooHighException::what() const throw(){
 	return (RED "Grade too high" RESET);
 }
 
+const	char* AForm::FormNotSignedException::what() const throw(){
+	return (RED "Form is not signed" RESET);
+}
+
+void	AForm::checkRequirements(Bureaucrat const& executer) const {
+	if (!_sign)
+		throw AForm::FormNotSignedException();
+	if (executer.getGrade() > _grade_exec)
+		throw AForm::GradeTooLowException();
+}
+
 std::ostream& operator<<(std::ostream& os, const AForm& obj) {
 	os << obj.getName() << ", form sign " << obj.getSign() << ", grade sign " << obj.getGradeSign() << ", grade exec " << obj.getGradeExec() << ".";
 	return os;
