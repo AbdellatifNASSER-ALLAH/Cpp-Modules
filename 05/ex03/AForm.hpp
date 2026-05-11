@@ -29,7 +29,7 @@ class	AForm {
 		virtual	void	execute(Bureaucrat const& executer) const = 0;
 		void	checkRequirements(Bureaucrat const& executer) const;
 
-		const std::string	getName() const;
+		std::string	getName() const;
 		bool			getSign() const;
 		int		getGradeSign() const;
 		int		getGradeExec() const;

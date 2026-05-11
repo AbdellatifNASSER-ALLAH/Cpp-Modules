@@ -21,7 +21,7 @@ AForm& AForm::operator=(const AForm& other) {
 
 AForm::~AForm() {}
 
-const std::string	AForm::getName() const {	return (_name); }
+std::string	AForm::getName() const {	return (_name); }
 bool			AForm::getSign() const {	return (_sign); }
 int		AForm::getGradeSign() const { return (_grade_sign); }
 int		AForm::getGradeExec() const { return (_grade_exec); }

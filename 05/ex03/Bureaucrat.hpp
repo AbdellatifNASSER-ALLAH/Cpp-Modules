@@ -22,7 +22,7 @@ class	Bureaucrat {
 		Bureaucrat& operator=(const Bureaucrat& other);
 		~Bureaucrat();
 
-		const	std::string	getName() const;
+		std::string	getName() const;
 		int	getGrade() const;
 		void	plusGrade(); 
 		void	minusGrade();
