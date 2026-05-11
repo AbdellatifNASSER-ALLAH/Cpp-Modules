@@ -26,3 +26,15 @@ AForm*	Intern::makeForm(const std::string& name, const std::string& target) {
 	std::cout << "Error: Form name '" << name << "' not found." << std::endl;
 	return NULL;
 }
+
+AForm*	Intern::_createShurbbery(const std::string& target) {
+	return new ShrubberyCreationForm(target);
+}
+
+AForm*	Intern::_createRobotomy(const std::string& target) {
+	return new RobotomyRequestForm(target);
+}
+
+AForm*	Intern::_createPardon(const std::string& target) {
+	return new PresidentialPardonForm(target);
+}
