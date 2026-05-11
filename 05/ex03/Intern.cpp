@@ -14,7 +14,7 @@ Intern& Intern::operator=(const Intern& other) {
 Intern::~Intern() { std::cout << "Intern destructor called" << std::endl; }
 
 AForm*	Intern::makeForm(const std::string& name, const std::string& target) {
-	std::string	formNames[] = { "robotomy request","presidential pardon", "shrubbery creation" };
+	std::string		formNames[] = { "robotomy request","presidential pardon", "shrubbery creation" };
 	Intern::formCreators	functions[] = { &Intern::_createRobotomy , &Intern::_createPardon, &Intern::_createShrubbery };
 
 	for(int i = 0; i < 3; i++) {
