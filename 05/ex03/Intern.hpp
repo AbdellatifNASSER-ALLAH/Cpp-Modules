@@ -13,7 +13,7 @@ class AForm;
 
 class	Intern {
 	private:
-		AForm*	_createShurbbery(const std::string& target);
+		AForm*	_createShrubbery(const std::string& target);
 		AForm*	_createRobotomy(const std::string& target);
 		AForm*	_createPardon(const std::string& target);
 

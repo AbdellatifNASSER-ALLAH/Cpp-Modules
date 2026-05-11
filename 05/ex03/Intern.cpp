@@ -15,7 +15,7 @@ Intern::~Intern() { std::cout << "Intern destructor called" << std::endl; }
 
 AForm*	Intern::makeForm(const std::string& name, const std::string& target) {
 	std::string	formNames[] = { "robotomy request","presidential pardon", "shrubbery creation" };
-	Intern::formCreators	functions[] = { &Intern::_createRobotomy , &Intern::_createPardon, &Intern::_createShurbbery };
+	Intern::formCreators	functions[] = { &Intern::_createRobotomy , &Intern::_createPardon, &Intern::_createShrubbery };
 
 	for(int i = 0; i < 3; i++) {
 		if (name == formNames[i]) {
@@ -27,7 +27,7 @@ AForm*	Intern::makeForm(const std::string& name, const std::string& target) {
 	return NULL;
 }
 
-AForm*	Intern::_createShurbbery(const std::string& target) {
+AForm*	Intern::_createShrubbery(const std::string& target) {
 	return new ShrubberyCreationForm(target);
 }
 
