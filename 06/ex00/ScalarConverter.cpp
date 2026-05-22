@@ -19,16 +19,16 @@ void ScalarConverter::convert(const std::string &str) {
 	// TODO: Implement robust C++98 type detection and conversion
 	// TODO: Handle special literals (nan, nanf, +inf, etc.)
 	if (str.length() == 1 && !isdigit(str[0])) {
-		//convert._printChar(str);
+		convert._printChar(str[0]);
 	} else if (str.find('.') != std::string::npos) {
-		if (str.back() == 'f') { // TODO: Fix C++11 back() usage
+		if (str[str.length() - 1 ] == 'f') {
 			// convert._printfloat(str);
 		} else {
 			// convert._printDouble(str);
 		}
 	} else if (str.find_first_not_of("0123456789") == std::string::npos) {
 		// TODO: Replace C++11 std::stoi with C++98 compatible conversion
-		convert._printInt(std::stoi(str));
+		//convert._printInt(str);
 	} else {
 		std::cout << "char	: Impossible" << std::endl;
 		std::cout << "int	: Impossible" << std::endl;

@@ -16,8 +16,8 @@ class ScalarConverter {
 		void	_printInt(const int i);
 		//void	_printFloat(const float f);
 		//void	_printDouble(const double d);
-	public:
 
+	public:
 		static	void	convert(const std::string& str);
 };
 
