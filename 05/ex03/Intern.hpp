@@ -16,6 +16,7 @@ class	Intern {
 		AForm*	_createShrubbery(const std::string& target);
 		AForm*	_createRobotomy(const std::string& target);
 		AForm*	_createPardon(const std::string& target);
+		typedef AForm* (Intern::*formCreators)(const std::string &);
 
 	public:
 		Intern();
@@ -23,7 +24,6 @@ class	Intern {
 		Intern& operator=(const Intern& other);
 		~Intern();
 		
-		typedef AForm* (Intern::*formCreators)(const std::string &);
 		AForm*	makeForm(const std::string& name, const std::string& target);
 };
 
