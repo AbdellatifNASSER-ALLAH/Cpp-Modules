@@ -1,12 +1,4 @@
 #include "ScalarConverter.hpp"
-#include <iostream>
-#include <string>
-#include <cstdlib>
-#include <climits>
-#include <cmath>
-#include <iomanip>
-#include <limits>
-#include <cctype>
 
 ScalarConverter::ScalarConverter() {}
 
@@ -53,7 +45,7 @@ void ScalarConverter::convert(const std::string &str) {
 	} else {
 		char *endptr;
 		doubleVal = strtod(str.c_str(), &endptr);
-		
+
 		if (*endptr != '\0' && !(*endptr == 'f' && *(endptr + 1) == '\0')) {
 			std::cout << "char: impossible" << std::endl;
 			std::cout << "int: impossible" << std::endl;
@@ -72,17 +64,12 @@ void ScalarConverter::convert(const std::string &str) {
 		else
 			intVal = static_cast<int>(doubleVal);
 
-		if (doubleVal < -std::numeric_limits<float>::max() || doubleVal > std::numeric_limits<float>::max()) {
-            if (doubleVal != doubleVal || doubleVal > std::numeric_limits<double>::max() || doubleVal < -std::numeric_limits<double>::max()) {
-                // handled by isSpecial or we allow inf
-            } else {
-                possibleFloat = false;
-            }
-        }
-		floatVal = static_cast<float>(doubleVal);
+		if (doubleVal < -std::numeric_limits<float>::max() || doubleVal > std::numeric_limits<float>::max())
+				possibleFloat = false;
+		else
+			floatVal = static_cast<float>(doubleVal);
 	}
 
-	// char
 	std::cout << "char: ";
 	if (!possibleChar)
 		std::cout << "impossible" << std::endl;
@@ -91,28 +78,28 @@ void ScalarConverter::convert(const std::string &str) {
 	else
 		std::cout << "Non displayable" << std::endl;
 
-	// int
 	std::cout << "int: ";
 	if (!possibleInt)
 		std::cout << "impossible" << std::endl;
 	else
 		std::cout << intVal << std::endl;
 
-	// float
 	std::cout << "float: ";
-    if (!possibleFloat && !isSpecial) {
-        std::cout << "impossible" << std::endl;
-    } else {
-        std::cout << floatVal;
-        if (!isSpecial && floatVal == floor(floatVal) && floatVal < 1000000)
-            std::cout << ".0";
-        std::cout << "f" << std::endl;
-    }
+	if (!possibleFloat && !isSpecial) {
+		std::cout << "impossible" << std::endl;
+	} else {
+		if (!isSpecial && floatVal == floor(floatVal))
+			std::cout << std::fixed << std::setprecision(1) << floatVal ;
+		else
+			std::cout << floatVal;
+		std::cout << "f" << std::endl;
+	}
 
-	// double
 	std::cout << "double: ";
-    std::cout << doubleVal;
-    if (!isSpecial && doubleVal == floor(doubleVal) && doubleVal < 1000000)
-        std::cout << ".0";
-    std::cout << std::endl;
+	if (!isSpecial && doubleVal == floor(doubleVal))
+		std::cout << std::fixed << std::setprecision(1) << doubleVal;
+	else
+		std::cout << doubleVal;
+	std::cout << std::endl;
+	std::cout.unsetf(std::ios::floatfield);
 }
