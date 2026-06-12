@@ -1,3 +1,4 @@
+# ! The code is compiled with the flag -std=c++98
 # Map for C++ Module 06 - ex00: Scalar Converter
 
 ## Current State Analysis
