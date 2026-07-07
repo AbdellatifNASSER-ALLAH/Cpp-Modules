@@ -18,6 +18,11 @@ class	Array {
 		T& operator[](int i);
 };
 
-#include "array.tpp"
+template <typename T>
+Array<T>::Array() : n(0), content( new T()) {}
+
+
+template <typename T>
+Array<T>::~Array() { delete[] content; }
 
 #endif // ARRAY_HPP
