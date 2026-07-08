@@ -1,7 +1,7 @@
 NAME = array
 
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 
 SRCS = main.cpp 
 HEADERS = Array.hpp 
@@ -16,5 +16,8 @@ clean:
 fclean: clean
 
 re: fclean all
+
+v: re
+	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
 
 .PHONY: all clean fclean re
