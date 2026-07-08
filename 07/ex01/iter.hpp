@@ -4,7 +4,6 @@
 
 #include <iostream>
 
-// non-const array
 template <typename A, typename Func>
 void iter(A *arr, const size_t n, Func f) {
 	if (!arr || n < 0 ) return ;
@@ -12,11 +11,4 @@ void iter(A *arr, const size_t n, Func f) {
 		f(arr[i]);
 }
 
-// const array
-template <typename A, typename Func>
-void iter(const A *arr, const size_t n, Func f) {
-	if (!arr || n < 0 ) return ;
-	for (size_t i = 0; i < n; i++)
-		f(arr[i]);
-}
 #endif
