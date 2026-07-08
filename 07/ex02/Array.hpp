@@ -1,16 +1,14 @@
-
 #ifndef ARRAY_HPP
 #define ARRAY_HPP
 
-#include <exception>
+#include <stdexcept>
 #include <iostream>
 
-
 template <typename T>
-class	Array {
+class Array {
 	private:
 		unsigned int	n;
-		T	*content;
+		T		*content;
 
 	public:
 		Array();
@@ -19,65 +17,72 @@ class	Array {
 		~Array();
 
 		Array& operator=(const Array& other);
-		T& operator[](int i);
+
+		T& operator[](unsigned int i);
+		const T& operator[](unsigned int i) const;
+
+		unsigned int size() const;
 };
 
 template <typename T>
-Array<T>::Array() : n(0), content( new T()) {}
+Array<T>::Array() : n(0), content(NULL) {}
 
 template <typename T>
-Array<T>::Array(unsigned int n) { 
-	try {
+Array<T>::Array(unsigned int n) : n(n) {
+	if (n > 0)
 		content = new T[n]();
-	}catch (std::exception &e) {
+	else
 		content = NULL;
-		std::cout << "Exception " << e.what() << std::endl;
-	}
 }
 
 template <typename T>
-Array<T>::Array(const Array& other) : n(other.n) {
-	try {
+Array<T>::Array(const Array& other) : n(other.n), content(NULL) {
+	if (n > 0) {
 		content = new T[n]();
 		for (unsigned int i = 0; i < n; i++)
 			content[i] = other.content[i];
-	}catch (std::exception &e) {
-		content = NULL;
-		std::cout << "Exception " << e.what() << std::endl;
 	}
 }
 
 template <typename T>
 Array<T>& Array<T>::operator=(const Array& other) {
 	if (this != &other) {
-		if (content)
-			delete[] content;
+		delete[] content;
+		
 		n = other.n;
-		try {
+		if (n > 0) {
 			content = new T[n]();
 			for (unsigned int i = 0; i < n; i++)
 				content[i] = other.content[i];
-		}catch (std::exception &e) {
+		} else {
 			content = NULL;
-			std::cout << "Exception " << e.what() << std::endl;
 		}
 	}
 	return *this;
 }
 
 template <typename T>
-T& Array<T>::operator[](int i) {
-	if (i < 0 || static_cast<unsigned int>(i) >= n) {
-		throw std::out_of_range("Index out of range");
-	} else {
-		return content[i];
-	}
+T& Array<T>::operator[](unsigned int i) {
+	if (i >= n)
+		throw std::out_of_range("Index out of bounds");
+	return content[i];
 }
 
 template <typename T>
-Array<T>::~Array() { 
-	if (content)
-		delete[] content; 
+const T& Array<T>::operator[](unsigned int i) const {
+	if (i >= n)
+		throw std::out_of_range("Index out of bounds");
+	return content[i];
+}
+
+template <typename T>
+unsigned int Array<T>::size() const {
+	return n;
+}
+
+template <typename T>
+Array<T>::~Array() {
+	delete[] content;
 }
 
 #endif // ARRAY_HPP
