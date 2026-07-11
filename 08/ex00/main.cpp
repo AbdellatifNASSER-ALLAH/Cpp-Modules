@@ -5,7 +5,6 @@
 int main() {
 	std::vector<int> vec;
 
-	// In C++98, we cannot use initializer lists. We must push_back manually.
 	vec.push_back(10);
 	vec.push_back(20);
 	vec.push_back(30);
