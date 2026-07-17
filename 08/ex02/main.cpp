@@ -1,28 +1,5 @@
-#include <exception>
 #include <iostream>
-#include <iterator>
-#include <ostream>
-#include <stack>
-#include <vector>
-#include <string>
-#include <deque>
-
-
-template <typename T, typename Container = std::deque<T> >
-class	MutantStack : public std::stack<T, Container> {
-	public:
-		MutantStack(Container a = Container()) : std::stack<T, Container>(a) {};
-
-		typedef typename Container::iterator iterator;
-
-		iterator begin() {
-			return this->c.begin();
-		};
-		iterator end() {
-			return this->c.end();
-		};
-
-};
+#include "MutantStack.hpp"
 
 void test_basic();
 void test_iteration();
