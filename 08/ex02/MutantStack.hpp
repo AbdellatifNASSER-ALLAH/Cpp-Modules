@@ -8,11 +8,11 @@ template <typename T, typename Container = std::deque<T> >
 class MutantStack : public std::stack<T, Container>
 {
     public:
-        MutantStack() : std::stack<T, Container>() {}
+        MutantStack() : std::stack<T, Container>() {};
         
-        MutantStack(MutantStack const & src) : std::stack<T, Container>(src) {}
+        MutantStack(MutantStack const & src) : std::stack<T, Container>(src) {};
         
-        ~MutantStack() {}
+        ~MutantStack() {};
         
         MutantStack & operator=(MutantStack const & rhs) 
         {
