@@ -1,73 +1,71 @@
 #include <iostream>
+#include <list>
 #include "MutantStack.hpp"
 
-void test_basic();
-void test_iteration();
-
-int	main() {
-	void test_basic();
-	void test_iteration();
-	return 0;
-}
-
-void test_basic()
+int main()
 {
-	std::stack<int> st;
-	MutantStack<int> mst;
+    std::cout << "--- Testing MutantStack ---" << '\n';
+    {
+        MutantStack<int> mstack;
 
-	// push
-	for (int i = 1; i <= 5; ++i)
-	{
-		st.push(i);
-		mst.push(i);
-	}
+        mstack.push(5);
+        mstack.push(17);
 
-	// top
-	std::cout << "Top std: " << st.top() << std::endl;
-	std::cout << "Top mst: " << mst.top() << std::endl;
+        std::cout << mstack.top() << '\n';
 
-	// size
-	std::cout << "Size std: " << st.size() << std::endl;
-	std::cout << "Size mst: " << mst.size() << std::endl;
+        mstack.pop();
 
-	// pop
-	st.pop();
-	mst.pop();
+        std::cout << mstack.size() << '\n';
 
-	std::cout << "After pop:\n";
-	std::cout << "Top std: " << st.top() << std::endl;
-	std::cout << "Top mst: " << mst.top() << std::endl;
+        mstack.push(3);
+        mstack.push(5);
+        mstack.push(733);
+        //[...]
+        mstack.push(0);
 
-	// empty
-	std::cout << "Empty std: " << st.empty() << std::endl;
-	std::cout << "Empty mst: " << mst.empty() << std::endl;
+        MutantStack<int>::iterator it = mstack.begin();
+        MutantStack<int>::iterator ite = mstack.end();
 
-	// clear all
-	while (!st.empty())
-		st.pop();
-	while (!mst.empty())
-		mst.pop();
+        ++it;
+        --it;
+        while (it != ite)
+        {
+            std::cout << *it << '\n';
+            ++it;
+        }
+        std::stack<int> s(mstack); // Validates Canonical Form and inheritance
+    }
 
-	std::cout << "After clearing:\n";
-	std::cout << "Empty std: " << st.empty() << std::endl;
-	std::cout << "Empty mst: " << mst.empty() << std::endl;
+    std::cout << "\n--- Testing std::list (Comparison) ---" << '\n';
+    {
+        std::list<int> list;
+
+        list.push_back(5);
+        list.push_back(17);
+
+        std::cout << list.back() << '\n';
+
+        list.pop_back();
+
+        std::cout << list.size() << '\n';
+
+        list.push_back(3);
+        list.push_back(5);
+        list.push_back(733);
+        //[...]
+        list.push_back(0);
+
+        std::list<int>::iterator it = list.begin();
+        std::list<int>::iterator ite = list.end();
+
+        ++it;
+        --it;
+        while (it != ite)
+        {
+            std::cout << *it << '\n';
+            ++it;
+        }
+    }
+
+    return 0;
 }
-
-void test_iteration()
-{
-	MutantStack<int> mst;
-
-	for (int i = 1; i <= 5; ++i)
-		mst.push(i);
-
-	std::cout << "Iterating mst: ";
-	MutantStack<int>::iterator it = mst.begin();
-	MutantStack<int>::iterator ite = mst.end();
-
-	while (it != ite)
-	{
-		std::cout << *it << " ";
-		++it;
-	}
-	std::cout << std::endl;
-} 
