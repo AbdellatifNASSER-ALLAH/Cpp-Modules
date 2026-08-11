@@ -8,7 +8,6 @@
 class	BitcoinExchange {
 	private:
 		std::map<std::string, float>	data;
-		std::map<std::string, float>	input;
 
 	public:
 		BitcoinExchange();
@@ -17,7 +16,7 @@ class	BitcoinExchange {
 		~BitcoinExchange();
 
 		void	processInputFile(const std::string &filename);
-		void	printExchangeRates() const;
+		bool	isValidDate(const std::string& date) const;
 };
 
 #endif

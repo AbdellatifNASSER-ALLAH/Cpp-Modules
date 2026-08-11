@@ -3,14 +3,13 @@
 int	main(int ac, char **av) {
 	
 	if (ac != 2) {
-		std::cerr << "Error: Invalid number of arguments." << std::endl;
+		std::cerr << "Error: could not open file." << std::endl;
 		return 1;
 	}
 
 	BitcoinExchange bitcoinExchange;
 
 	bitcoinExchange.processInputFile(av[1]);
-	bitcoinExchange.printExchangeRates();
 
 	return 0;
 }
