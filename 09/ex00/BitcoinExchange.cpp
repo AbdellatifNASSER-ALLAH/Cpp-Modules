@@ -1,5 +1,6 @@
 #include "BitcoinExchange.hpp"
 #include <fstream>
+#include <cstdlib>
 
 BitcoinExchange::BitcoinExchange(){
 
@@ -27,8 +28,7 @@ BitcoinExchange::BitcoinExchange(){
 			std::cerr << "Error: invalid date format in data.csv" << std::endl;
 			return;
 		}
-
-		float value = std::stof(line.substr(line.find(',') + 1));
+		float value = std::atof(line.substr(line.find(',') + 1).c_str());
 		if (value < 0) {
 			std::cerr << "Error: negative value in data.csv" << std::endl;
 			return;
@@ -55,7 +55,7 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other) {
 BitcoinExchange::~BitcoinExchange() {}
 
 void BitcoinExchange::processInputFile(const std::string &filename) {
-	std::ifstream file(filename);
+	std::ifstream file(filename.c_str());
 	if (!file.is_open()) {
 		std::cerr << "Error: could not open " << filename << std::endl;
 		return;
@@ -79,8 +79,7 @@ void BitcoinExchange::processInputFile(const std::string &filename) {
 			std::cerr << "Error: invalid date format in " << filename << std::endl;
 			continue;
 		}
-
-		float value = std::stof(line.substr(line.find('|') + 2));
+		float value = std::atof(line.substr(line.find('|') + 2).c_str());
 		if (value < 0) {
 			std::cerr << "Error: negative value in " << filename << std::endl;
 			continue;
