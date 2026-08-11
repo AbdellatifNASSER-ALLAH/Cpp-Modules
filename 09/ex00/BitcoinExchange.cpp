@@ -15,20 +15,34 @@ BitcoinExchange::BitcoinExchange(){
 		if (firstLine) {
 			if (line != "date,exchange_rate") {
 				std::cerr << "Error: invalid header in data.csv" << std::endl;
+				data.clear();
 				return;
 			}
 			firstLine = 0;
 			continue;
 		}
 
-		std::string date = line.substr(0, line.find(','));
-		if (date.length() != 10 || date[4] != '-' || date[7] != '-') {
-			std::cerr << "Error: invalid date format in data.csv" << std::endl;
+		if (line.empty())
+			continue;
+
+		std::string::size_type commaPos = line.find(',');
+		if (commaPos == std::string::npos) {
+			std::cerr << "Error: invalid format in data.csv => " << line << std::endl;
+			data.clear();
 			return;
 		}
-		float value = std::atof(line.substr(line.find(',') + 1).c_str());
+
+		std::string date = line.substr(0, commaPos);
+		if (!isValidDate(date)) {
+			std::cerr << "Error: invalid date format in data.csv => " << date << std::endl;
+			data.clear();
+			return;
+		}
+
+		float value = std::atof(line.substr(commaPos + 1).c_str());
 		if (value < 0) {
 			std::cerr << "Error: negative value in data.csv" << std::endl;
+			data.clear();
 			return;
 		}
 
@@ -50,6 +64,11 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other) {
 
 BitcoinExchange::~BitcoinExchange() {}
 void BitcoinExchange::processInputFile(const std::string &filename) {
+	if (data.empty()) {
+		std::cerr << "Error: internal price database is empty or could not be loaded." << std::endl;
+		return;
+	}
+
 	std::ifstream file(filename.c_str());
 
 	if (!file.is_open()) {
