@@ -1,4 +1,5 @@
 #include "PmergeMe.hpp"
+#include <iterator>
 
 PmergeMe::PmergeMe() {}
 PmergeMe::PmergeMe(const PmergeMe &other) { (void)other; }
@@ -38,19 +39,33 @@ bool	PmergeMe::isLess(const Deque &a, const Deque &b) {
 void	PmergeMe::sort(Vector &vec) {
 	if (vec.size() < 2)
 		return;
+
 	std::cout << "Before: ";
 	for (std::size_t i = 0; i < vec.size(); ++i) {
 		std::cout << vec[i] << " ";
 	}
 	std::cout << std::endl;
 
+	_nb_cmp = 0;
+
+	std::clock_t start = std::clock();
+
 	mergeInsert(vec, 1);
+
+	std::clock_t end = std::clock();
 
 	std::cout << "After:  ";
 	for (std::size_t i = 0; i < vec.size(); ++i) {
 		std::cout << vec[i] << " ";
 	}
 	std::cout << std::endl;
+
+	// Calculate elapsed time in microseconds
+	double elapsed = static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000000.0;
+
+	std::cout << "Time to process a range of " << vec.size() 
+		<< " elements with std::vector : " << elapsed << " us" << std::endl;
+
 	std::cout << "Number of comparisons: " << _nb_cmp << std::endl;
 }
 
@@ -143,20 +158,29 @@ void	PmergeMe::insertion(Vector &vec, std::size_t size_g) {
 	main.insert(main.begin(), pend[0]);
 
 	std::vector<std::size_t> jacob = buildJacobsthal(pend.size());
-	std::size_t	last_jacob = 1;
+	std::size_t	current_jacob, last_jacob = 1;
 	std::size_t	inserted = 1;
+
+	std::vector<Vector>::iterator end_bound;
+	std::vector<Vector>::iterator insert_pos;
+	Vector	chunk_to_insert;
 
 	for (std::size_t i = 1; i < jacob.size(); ++i) {
 
-		std::size_t current_jacob = std::min(jacob[i], pend.size());
+		current_jacob = std::min(jacob[i], pend.size());
 
 		for (std::size_t j = current_jacob; j > last_jacob; --j) {
 
-			Vector chunk_to_insert = pend[j - 1];
+			chunk_to_insert = pend[j - 1];
 
-			std::vector<Vector>::iterator insert_pos = std::lower_bound(
+			if ((j - 1) + inserted > main.size())
+				end_bound = main.end();
+			else
+				end_bound = main.begin() + (j - 1) + inserted;
+
+			insert_pos = std::lower_bound(
 					main.begin(),
-					main.begin() + j - 1 + inserted,
+					end_bound,
 					chunk_to_insert,
 					static_cast<bool(*)(const Vector&, const Vector&)>(isLess)
 					);
