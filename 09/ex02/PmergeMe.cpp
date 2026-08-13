@@ -5,6 +5,8 @@ PmergeMe::PmergeMe(const PmergeMe &other) { (void)other; }
 PmergeMe &PmergeMe::operator=(const PmergeMe &other) { (void)other; return *this; }
 PmergeMe::~PmergeMe() {}
 
+size_t PmergeMe::_nb_cmp = 0;
+
 void	PmergeMe::prepare(Vector &vec, int ac, char **av) {
 	
 	if (ac < 2)
@@ -36,7 +38,6 @@ bool	PmergeMe::isLess(const Deque &a, const Deque &b) {
 void	PmergeMe::sort(Vector &vec) {
 	if (vec.size() < 2)
 		return;
-	_nb_cmp = 0;
 	std::cout << "Before: ";
 	for (std::size_t i = 0; i < vec.size(); ++i) {
 		std::cout << vec[i] << " ";
@@ -45,7 +46,7 @@ void	PmergeMe::sort(Vector &vec) {
 
 	mergeInsert(vec, 1);
 
-	std::cout << "After: ";
+	std::cout << "After:  ";
 	for (std::size_t i = 0; i < vec.size(); ++i) {
 		std::cout << vec[i] << " ";
 	}
@@ -105,9 +106,9 @@ std::vector<PmergeMe::Vector>	PmergeMe::getPend(Vector &vec, std::size_t size_g)
 		pend.push_back(group);
 	}
 
-	if (i < vec.size())
+	if (vec.size() - i >= size_g)
 	{
-		Vector leftover(vec.begin() + i, vec.end());
+		Vector leftover(vec.begin() + i, vec.begin() + i + size_g);
 		pend.push_back(leftover);
 	}
 
@@ -130,6 +131,14 @@ void	PmergeMe::insertion(Vector &vec, std::size_t size_g) {
 	std::vector<Vector> pend = getPend(vec, size_g);
 
 	if (pend.empty()) return;
+
+	std::size_t step = size_g * 2;
+	std::size_t tail_start = 0;
+	for (; tail_start + step <= vec.size(); tail_start += step) {}
+	if (vec.size() - tail_start >= size_g) {
+		tail_start += size_g;
+	}
+	Vector tail(vec.begin() + tail_start, vec.end());
 
 	main.insert(main.begin(), pend[0]);
 
@@ -159,7 +168,7 @@ void	PmergeMe::insertion(Vector &vec, std::size_t size_g) {
 	}
 
 	vec.clear();
-	for (std::size_t i = 0; i < main.size(); ++i) {
-		vec.insert(vec.end(), main[i].begin(), main[i].end());
+	for (std::size_t k = 0; k < main.size(); ++k) {
+		vec.insert(vec.end(), main[k].begin(), main[k].end());
 	}
-}
+	vec.insert(vec.end(), tail.begin(), tail.end());}
