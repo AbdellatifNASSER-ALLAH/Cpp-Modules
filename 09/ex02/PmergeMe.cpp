@@ -14,6 +14,11 @@ void	PmergeMe::prepare(Vector &vec, int ac, char **av) {
 		throw std::invalid_argument("Error: No input numbers provided.");
 
 	for (int i = 1; i < ac; i++) {
+		// FIX: Character-by-character check to ensure only positive integers are accepted
+		for (int j = 0; av[i][j]; j++) {
+			if (!std::isdigit(av[i][j]))
+				throw std::invalid_argument("Error: Invalid input character.");
+		}
 		int num = std::atoi(av[i]);
 		vec.push_back(num);
 	}
@@ -40,33 +45,12 @@ void	PmergeMe::sort(Vector &vec) {
 	if (vec.size() < 2)
 		return;
 
-	std::cout << "Before: ";
-	for (std::size_t i = 0; i < vec.size(); ++i) {
-		std::cout << vec[i] << " ";
-	}
-	std::cout << std::endl;
-
+	// FIX: Removed 'Before:' printing and timing logic from here to main.cpp as per compliance requirements
 	_nb_cmp = 0;
-
-	std::clock_t start = std::clock();
 
 	mergeInsert(vec, 1);
 
-	std::clock_t end = std::clock();
-
-	std::cout << "After:  ";
-	for (std::size_t i = 0; i < vec.size(); ++i) {
-		std::cout << vec[i] << " ";
-	}
-	std::cout << std::endl;
-
-	// Calculate elapsed time in microseconds
-	double elapsed = static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000000.0;
-
-	std::cout << "Time to process a range of " << vec.size() 
-		<< " elements with std::vector : " << elapsed << " us" << std::endl;
-
-	std::cout << "Number of comparisons: " << _nb_cmp << std::endl;
+	// FIX: Removed 'After:' and execution time printing from here to main.cpp
 }
 
 void	PmergeMe::mergeInsert(Vector &vec, std::size_t size_g) {
@@ -208,6 +192,11 @@ void	PmergeMe::prepare(Deque &vec, int ac, char **av) {
 		throw std::invalid_argument("Error: No input numbers provided.");
 
 	for (int i = 1; i < ac; i++) {
+		// FIX: Character-by-character check to ensure only positive integers are accepted for Deque
+		for (int j = 0; av[i][j]; j++) {
+			if (!std::isdigit(av[i][j]))
+				throw std::invalid_argument("Error: Invalid input character.");
+		}
 		int num = std::atoi(av[i]);
 		vec.push_back(num);
 	}
@@ -217,33 +206,12 @@ void	PmergeMe::sort(Deque &vec) {
 	if (vec.size() < 2)
 		return;
 
-	std::cout << "Before: ";
-	for (std::size_t i = 0; i < vec.size(); ++i) {
-		std::cout << vec[i] << " ";
-	}
-	std::cout << std::endl;
-
+	// FIX: Removed 'Before:' printing and timing logic from Deque sort to main.cpp as per compliance requirements
 	_nb_cmp = 0;
-
-	std::clock_t start = std::clock();
 
 	mergeInsert(vec, 1);
 
-	std::clock_t end = std::clock();
-
-	std::cout << "After:  ";
-	for (std::size_t i = 0; i < vec.size(); ++i) {
-		std::cout << vec[i] << " ";
-	}
-	std::cout << std::endl;
-
-	// Calculate elapsed time in microseconds
-	double elapsed = static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000000.0;
-
-	std::cout << "Time to process a range of " << vec.size() 
-		<< " elements with std::deque : " << elapsed << " us" << std::endl;
-
-	std::cout << "Number of comparisons: " << _nb_cmp << std::endl;
+	// FIX: Removed 'After:' and execution time printing from Deque sort to main.cpp
 }
 
 void	PmergeMe::mergeInsert(Deque &vec, std::size_t size_g) {

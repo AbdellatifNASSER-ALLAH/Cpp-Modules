@@ -7,6 +7,8 @@
 #include <deque>
 #include <algorithm>
 #include <ctime> 
+// FIX: Added stdexcept for std::invalid_argument usage
+#include <stdexcept>
 
 class	PmergeMe {
 	public:
