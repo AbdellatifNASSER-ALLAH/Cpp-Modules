@@ -24,9 +24,16 @@ class	PmergeMe {
 		PmergeMe &operator=(const PmergeMe &other);
 		~PmergeMe();
 
-		static	void	mergeInsert(Vector &vec, int size_g);
-		static	void	pairwiseSort(Vector &vec, int size_g);
-		static	void	insertion(Vector &vec, int size_g);
+		static	void			mergeInsert(Vector &vec, int size_g);
+		static	void			pairwiseSort(Vector &vec, int size_g);
+		static	void			insertion(Vector &vec, int size_g);
+		static	std::vector<Vector>	getMainChain(Vector &vec, int size_g);
+		static	std::vector<Vector>	getPend(Vector &vec, int size_g);
+
+
+		static	bool	isLess(value_type &a, value_type &b);
+		static	bool	isLess(Vector &a, Vector &b);
+		static	bool	isLess(Deque &a, Deque &b);
 
 };
 
