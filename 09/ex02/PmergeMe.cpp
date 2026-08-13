@@ -16,17 +16,17 @@ void	PmergeMe::prepare(Vector &vec, int ac, char **av) {
 	}
 }
 
-bool	PmergeMe::isLess(value_type &a, value_type &b) {
+bool	PmergeMe::isLess(const value_type &a, const value_type &b) {
 	_nb_cmp++;
 	return (a < b);
 }
 
-bool	PmergeMe::isLess(Vector &a, Vector &b) {
+bool	PmergeMe::isLess(const Vector &a, const Vector &b) {
 	_nb_cmp++;
 	return (a.back() < b.back());
 }
 
-bool	PmergeMe::isLess(Deque &a, Deque &b) {
+bool	PmergeMe::isLess(const Deque &a, const Deque &b) {
 	_nb_cmp++;
 	return (a.back() < b.back());
 }
@@ -37,10 +37,23 @@ void	PmergeMe::sort(Vector &vec) {
 	if (vec.size() < 2)
 		return;
 	_nb_cmp = 0;
+	std::cout << "Before: ";
+	for (std::size_t i = 0; i < vec.size(); ++i) {
+		std::cout << vec[i] << " ";
+	}
+	std::cout << std::endl;
+
 	mergeInsert(vec, 1);
+
+	std::cout << "After: ";
+	for (std::size_t i = 0; i < vec.size(); ++i) {
+		std::cout << vec[i] << " ";
+	}
+	std::cout << std::endl;
+	std::cout << "Number of comparisons: " << _nb_cmp << std::endl;
 }
 
-void	PmergeMe::mergeInsert(Vector &vec, int size_g) {
+void	PmergeMe::mergeInsert(Vector &vec, std::size_t size_g) {
 	if (size_g >= vec.size())
 		return;
 
@@ -49,7 +62,7 @@ void	PmergeMe::mergeInsert(Vector &vec, int size_g) {
 	insertion(vec, size_g);
 }
 
-void	PmergeMe::pairwiseSort(Vector &vec, int size_g) {
+void	PmergeMe::pairwiseSort(Vector &vec, std::size_t size_g) {
 
 	std::size_t step = size_g * 2;
 
@@ -69,7 +82,7 @@ void	PmergeMe::pairwiseSort(Vector &vec, int size_g) {
 	}
 }
 
-std::vector<PmergeMe::Vector>	PmergeMe::getMainChain(Vector &vec, int size_g) {
+std::vector<PmergeMe::Vector>	PmergeMe::getMainChain(Vector &vec, std::size_t size_g) {
 	std::vector<Vector>	main;
 	std::size_t step = size_g * 2;
 
@@ -81,7 +94,7 @@ std::vector<PmergeMe::Vector>	PmergeMe::getMainChain(Vector &vec, int size_g) {
 	return main;
 }
 
-std::vector<PmergeMe::Vector>	PmergeMe::getPend(Vector &vec, int size_g) {
+std::vector<PmergeMe::Vector>	PmergeMe::getPend(Vector &vec, std::size_t size_g) {
 	std::vector<Vector>	pend;
 	std::size_t step = size_g * 2;
 	std::size_t i = 0;
@@ -91,7 +104,7 @@ std::vector<PmergeMe::Vector>	PmergeMe::getPend(Vector &vec, int size_g) {
 		Vector group(vec.begin() + i, vec.begin() + i + size_g);
 		pend.push_back(group);
 	}
-	
+
 	if (i < vec.size())
 	{
 		Vector leftover(vec.begin() + i, vec.end());
@@ -100,14 +113,53 @@ std::vector<PmergeMe::Vector>	PmergeMe::getPend(Vector &vec, int size_g) {
 
 	return pend;
 }
+std::vector<std::size_t>	PmergeMe::buildJacobsthal(std::size_t pend_size) {
+	std::vector<std::size_t> jacob;
+	jacob.push_back(1);
+	jacob.push_back(3);
 
-void	PmergeMe::insertion(Vector &vec, int size_g) {
+	while (jacob.back() < pend_size) {
+		std::size_t next = jacob.back() + 2 * jacob[jacob.size() - 2];
+		jacob.push_back(next);
+	}
+	return jacob;
+}
 
-	std::vector<Vector>	main = getMainChain(vec, size_g);
-	std::vector<Vector>	pend = getPend(vec, size_g);
+void	PmergeMe::insertion(Vector &vec, std::size_t size_g) {
+	std::vector<Vector> main = getMainChain(vec, size_g);
+	std::vector<Vector> pend = getPend(vec, size_g);
 
 	if (pend.empty()) return;
-	
 
+	main.insert(main.begin(), pend[0]);
 
+	std::vector<std::size_t> jacob = buildJacobsthal(pend.size());
+	std::size_t	last_jacob = 1;
+	std::size_t	inserted = 1;
+
+	for (std::size_t i = 1; i < jacob.size(); ++i) {
+
+		std::size_t current_jacob = std::min(jacob[i], pend.size());
+
+		for (std::size_t j = current_jacob; j > last_jacob; --j) {
+
+			Vector chunk_to_insert = pend[j - 1];
+
+			std::vector<Vector>::iterator insert_pos = std::lower_bound(
+					main.begin(),
+					main.begin() + j - 1 + inserted,
+					chunk_to_insert,
+					static_cast<bool(*)(const Vector&, const Vector&)>(isLess)
+					);
+
+			main.insert(insert_pos, chunk_to_insert);
+			++inserted;
+		}
+		last_jacob = current_jacob;
+	}
+
+	vec.clear();
+	for (std::size_t i = 0; i < main.size(); ++i) {
+		vec.insert(vec.end(), main[i].begin(), main[i].end());
+	}
 }

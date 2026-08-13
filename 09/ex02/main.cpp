@@ -7,5 +7,7 @@ int	main(int ac, char **av){
 
 	PmergeMe::prepare(a, ac, av);
 
+	PmergeMe::sort(a);
+
 	return 0;
 }
