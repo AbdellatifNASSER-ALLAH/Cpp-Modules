@@ -7,7 +7,6 @@
 #include <deque>
 #include <algorithm>
 #include <ctime> 
-// FIX: Added stdexcept for std::invalid_argument usage
 #include <stdexcept>
 
 class	PmergeMe {
@@ -30,17 +29,18 @@ class	PmergeMe {
 		~PmergeMe();
 
 		static	void			mergeInsert(Vector &vec, std::size_t size_g);
-		static	void			mergeInsert(Deque &vec, std::size_t size_g);
 		static	void			pairwiseSort(Vector &vec, std::size_t size_g);
-		static	void			pairwiseSort(Deque &vec, std::size_t size_g);
 		static	void			insertion(Vector &vec, std::size_t size_g);
-		static	void			insertion(Deque &vec, std::size_t size_g);
 		static	std::vector<Vector>	getMainChain(Vector &vec, std::size_t size_g);
-		static	std::vector<Deque>	getMainChain(Deque &vec, std::size_t size_g);
 		static	std::vector<Vector>	getPend(Vector &vec, std::size_t size_g);
-		static	std::vector<Deque>	getPend(Deque &vec, std::size_t size_g);
-		static	std::vector<std::size_t>	buildJacobsthal(std::size_t pend_size);
 
+		static	void			mergeInsert(Deque &vec, std::size_t size_g);
+		static	void			pairwiseSort(Deque &vec, std::size_t size_g);
+		static	void			insertion(Deque &vec, std::size_t size_g);
+		static	std::vector<Deque>	getMainChain(Deque &vec, std::size_t size_g);	
+		static	std::vector<Deque>	getPend(Deque &vec, std::size_t size_g);
+
+		static	std::vector<std::size_t>	buildJacobsthal(std::size_t pend_size);
 
 		static	bool	isLess(const value_type &a, const value_type &b);
 		static	bool	isLess(const Vector &a, const Vector &b);

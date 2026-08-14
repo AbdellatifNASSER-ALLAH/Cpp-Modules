@@ -14,12 +14,15 @@ void	PmergeMe::prepare(Vector &vec, int ac, char **av) {
 		throw std::invalid_argument("Error: No input numbers provided.");
 
 	for (int i = 1; i < ac; i++) {
-		// FIX: Character-by-character check to ensure only positive integers are accepted
 		for (int j = 0; av[i][j]; j++) {
 			if (!std::isdigit(av[i][j]))
 				throw std::invalid_argument("Error: Invalid input character.");
 		}
+		if (av[i][0] == '\0')
+			throw std::invalid_argument("Error: Empty argument.");
 		int num = std::atoi(av[i]);
+		if (num > 2147483647 || num < 0)
+			throw std::invalid_argument("Error: Number out of integer bounds.");
 		vec.push_back(num);
 	}
 }
@@ -45,12 +48,9 @@ void	PmergeMe::sort(Vector &vec) {
 	if (vec.size() < 2)
 		return;
 
-	// FIX: Removed 'Before:' printing and timing logic from here to main.cpp as per compliance requirements
 	_nb_cmp = 0;
-
 	mergeInsert(vec, 1);
 
-	// FIX: Removed 'After:' and execution time printing from here to main.cpp
 }
 
 void	PmergeMe::mergeInsert(Vector &vec, std::size_t size_g) {
@@ -182,17 +182,14 @@ void	PmergeMe::insertion(Vector &vec, std::size_t size_g) {
 	vec.insert(vec.end(), tail.begin(), tail.end());
 }
 
-// ==========================================
 // Deque Implementations
-// ==========================================
 
 void	PmergeMe::prepare(Deque &vec, int ac, char **av) {
-	
+
 	if (ac < 2)
 		throw std::invalid_argument("Error: No input numbers provided.");
 
 	for (int i = 1; i < ac; i++) {
-		// FIX: Character-by-character check to ensure only positive integers are accepted for Deque
 		for (int j = 0; av[i][j]; j++) {
 			if (!std::isdigit(av[i][j]))
 				throw std::invalid_argument("Error: Invalid input character.");
@@ -206,12 +203,8 @@ void	PmergeMe::sort(Deque &vec) {
 	if (vec.size() < 2)
 		return;
 
-	// FIX: Removed 'Before:' printing and timing logic from Deque sort to main.cpp as per compliance requirements
 	_nb_cmp = 0;
-
 	mergeInsert(vec, 1);
-
-	// FIX: Removed 'After:' and execution time printing from Deque sort to main.cpp
 }
 
 void	PmergeMe::mergeInsert(Deque &vec, std::size_t size_g) {
