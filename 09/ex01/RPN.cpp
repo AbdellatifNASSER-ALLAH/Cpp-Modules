@@ -33,8 +33,8 @@ RPN::RPN(const std::string &str)
 		{
 			if (numbs.size() < 2)
 			{
-				std::cout << "Error: not enough numbers for operation" << std::endl;
-				return;
+				std::cerr << "Error: not enough numbers for operation" << std::endl;
+				throw RPNException();
 			}
 
 			a = numbs.top();
@@ -53,23 +53,23 @@ RPN::RPN(const std::string &str)
 			{
 				if (a == 0)
 				{
-					std::cout << "Error: division by zero" << std::endl;
-					return;
+					std::cerr << "Error: division by zero" << std::endl;
+					throw RPNException();
 				}
 				numbs.push(b / a);
 			}
 		}
 		else
 		{
-			std::cout << "Error: invalid character" << std::endl;
-			return;
+			std::cerr << "Error: invalid character" << std::endl;
+			throw RPNException();
 		}
 	}
 
 	if (numbs.size() != 1)
 	{
-		std::cout << "Error: invalid expression" << std::endl;
-		return;
+		std::cerr << "Error: invalid expression" << std::endl;
+		throw RPNException();
 	}
 	std::cout << numbs.top() << std::endl;
 	return;

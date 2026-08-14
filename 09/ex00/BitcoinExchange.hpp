@@ -19,7 +19,11 @@ class	BitcoinExchange {
 		~BitcoinExchange();
 
 		void	processInputFile(const std::string &);
-		bool	isValidDate(const std::string&) const;
+
+	private:
+		static	bool	isValidDate(const std::string&);
+		static	bool isValidValue(const std::string &str);
+		static	std::string trim(const std::string &str);
 };
 
 #endif

@@ -1,4 +1,5 @@
 #include "BitcoinExchange.hpp"
+#include <endian.h>
 
 BitcoinExchange::BitcoinExchange(){
 
@@ -51,19 +52,16 @@ BitcoinExchange::BitcoinExchange(){
 	file.close();
 }
 
-BitcoinExchange::BitcoinExchange(const BitcoinExchange &other) {
-	data = other.data;
-}
-
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &other) { data = other.data; }
 BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other) {
-	if (this != &other) {
+	if (this != &other)
 		data = other.data;
-	}
 	return *this;
 }
-
 BitcoinExchange::~BitcoinExchange() {}
-void BitcoinExchange::processInputFile(const std::string &filename) {
+
+
+void	BitcoinExchange::processInputFile(const std::string &filename) {
 	if (data.empty()) {
 		std::cerr << "Error: internal price database is empty or could not be loaded." << std::endl;
 		return;
@@ -78,7 +76,6 @@ void BitcoinExchange::processInputFile(const std::string &filename) {
 
 	std::string line;
 
-	// Check header
 	if (!std::getline(file, line)) {
 		std::cerr << "Error: empty file" << std::endl;
 		return;
@@ -98,13 +95,15 @@ void BitcoinExchange::processInputFile(const std::string &filename) {
 			continue;
 		}
 
-		std::string date = line.substr(0, separator - 1);
-		float value = std::atof(line.substr(separator + 2).c_str());
+		std::string date = trim(line.substr(0, separator));
+		std::string valueStr = trim(line.substr(separator + 1));
 
-		if (!isValidDate(date)) {
+		if (!isValidDate(date) || !isValidValue(valueStr)) {
 			std::cerr << "Error: bad input => " << line << std::endl;
 			continue;
 		}
+
+		float value = std::atof(valueStr.c_str());
 
 		if (value < 0) {
 			std::cerr << "Error: not a positive number." << std::endl;
@@ -141,7 +140,7 @@ void BitcoinExchange::processInputFile(const std::string &filename) {
 	file.close();
 }
 
-bool BitcoinExchange::isValidDate(const std::string& date) const {
+bool BitcoinExchange::isValidDate(const std::string& date) {
 	if (date.size() != 10)
 		return false;
 
@@ -167,7 +166,6 @@ bool BitcoinExchange::isValidDate(const std::string& date) const {
 		31, 31, 30, 31, 30, 31
 	};
 
-	// Leap year
 	if (month == 2 &&
 			(year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))) {
 		daysInMonth[1] = 29;
@@ -177,4 +175,40 @@ bool BitcoinExchange::isValidDate(const std::string& date) const {
 		return false;
 
 	return true;
+}
+
+bool	BitcoinExchange::isValidValue(const std::string &str) {
+	if (str.empty())
+		return false;
+
+	size_t i = 0;
+	if (str[i] == '-' || str[i] == '+') {
+		i++;
+	}
+
+	if (i == str.size())
+		return false;
+
+	int dotCount = 0;
+	bool hasDigit = false;
+	for (; i < str.size(); ++i) {
+		if (str[i] == '.') {
+			dotCount++;
+			if (dotCount > 1)
+				return false;
+		} else if (std::isdigit(str[i])) {
+			hasDigit = true;
+		} else {
+			return false;
+		}
+	}
+	return hasDigit;
+}
+
+std::string	BitcoinExchange::trim(const std::string &str) {
+	size_t first = str.find_first_not_of(" \t\r\n\v\f");
+	if (first == std::string::npos)
+		return "";
+	size_t last = str.find_last_not_of(" \t\r\n\v\f");
+	return str.substr(first, (last - first + 1));
 }

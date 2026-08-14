@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <stack>
+#include <exception>
 
 class	RPN {
 	private:
@@ -15,6 +16,12 @@ class	RPN {
 		~RPN();
 		RPN(const std::string &str);
 
+		class RPNException : public std::exception {
+			public:
+				virtual const char *what() const throw() {
+					return "RPN Error";
+				}
+		};
 };
 
 #endif
